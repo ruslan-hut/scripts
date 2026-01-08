@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Disable history expansion to allow special characters like '!' in passwords
+set +H
+
 #===============================================================================
 # MongoDB Backup and FTP Upload Script
 # Run on Ubuntu server with: bash mongodb_backup_ftp.sh
@@ -129,22 +132,30 @@ log "=========================================="
 # Create backup directory if it doesn't exist
 mkdir -p "$BACKUP_DIR" || error_exit "Failed to create backup directory"
 
-# Build mongodump command
-MONGODUMP_CMD="mongodump --host ${MONGO_HOST} --port ${MONGO_PORT} --out ${BACKUP_DIR}/${BACKUP_NAME}"
+# Build mongodump command using array to handle special characters in passwords
+MONGODUMP_ARGS=(
+    --host "${MONGO_HOST}"
+    --port "${MONGO_PORT}"
+    --out "${BACKUP_DIR}/${BACKUP_NAME}"
+)
 
 # Add database if specified
 if [ -n "$MONGO_DB" ]; then
-    MONGODUMP_CMD="$MONGODUMP_CMD --db ${MONGO_DB}"
+    MONGODUMP_ARGS+=(--db "${MONGO_DB}")
 fi
 
 # Add authentication if credentials provided
 if [ -n "$MONGO_USER" ] && [ -n "$MONGO_PASS" ]; then
-    MONGODUMP_CMD="$MONGODUMP_CMD --username ${MONGO_USER} --password ${MONGO_PASS} --authenticationDatabase ${MONGO_AUTH_DB}"
+    MONGODUMP_ARGS+=(
+        --username "${MONGO_USER}"
+        --password "${MONGO_PASS}"
+        --authenticationDatabase "${MONGO_AUTH_DB}"
+    )
 fi
 
 # Execute MongoDB dump
 log "Creating MongoDB dump..."
-eval "$MONGODUMP_CMD" 2>&1 | tee -a "$LOG_FILE"
+mongodump "${MONGODUMP_ARGS[@]}" 2>&1 | tee -a "$LOG_FILE"
 
 if [ ${PIPESTATUS[0]} -ne 0 ]; then
     error_exit "MongoDB dump failed"
