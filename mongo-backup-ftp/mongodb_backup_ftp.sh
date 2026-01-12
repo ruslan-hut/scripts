@@ -17,14 +17,14 @@ MONGO_HOST="localhost"
 MONGO_PORT="27017"
 MONGO_DB="your_database_name"           # Database to backup (leave empty for all databases)
 MONGO_USER=""                            # MongoDB username (leave empty if no auth)
-MONGO_PASS=""                            # MongoDB password
+MONGO_PASS=''                            # MongoDB password
 MONGO_AUTH_DB="admin"                    # Authentication database
 
 # FTP Settings
 FTP_HOST="ftp.example.com"
 FTP_PORT="21"
 FTP_USER="ftp_username"
-FTP_PASS="ftp_password"
+FTP_PASS='ftp_password'
 FTP_REMOTE_DIR="/backups/mongodb"        # Remote directory on FTP server
 
 # Local Settings

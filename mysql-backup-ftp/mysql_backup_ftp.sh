@@ -17,13 +17,13 @@ MYSQL_HOST="localhost"
 MYSQL_PORT="3306"
 MYSQL_DB="your_database_name"            # Database to backup (leave empty for all databases)
 MYSQL_USER="root"                        # MySQL username
-MYSQL_PASS=""                            # MySQL password (leave empty if no password)
+MYSQL_PASS=''                            # MySQL password (use single quotes for special chars like $ ! `)
 
 # FTP Settings
 FTP_HOST="ftp.example.com"
 FTP_PORT="21"
 FTP_USER="ftp_username"
-FTP_PASS="ftp_password"
+FTP_PASS='ftp_password'                  # Use single quotes for special chars like $ ! `
 FTP_REMOTE_DIR="/backups/mysql"          # Remote directory on FTP server
 
 # Local Settings
