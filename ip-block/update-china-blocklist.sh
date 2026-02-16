@@ -39,7 +39,7 @@ while IFS= read -r cidr; do
     cidr="$(echo "$cidr" | tr -d '[:space:]')"
     [ -z "$cidr" ] && continue
     ipset add "$TMP_SET" "$cidr" 2>/dev/null || true
-    ((count++))
+    count=$((count + 1))
 done < "$ZONE_FILE"
 
 # Atomic swap
