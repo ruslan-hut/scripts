@@ -30,6 +30,7 @@ EXCLUDES=(
     --exclude='./upload/system/storage/upload'
     --exclude='./upload/system/storage/backup'
     --exclude='./upload/system/storage/modification'
+    --exclude='./storage_prev/'
     --exclude='*.pdf'
     --exclude='*.log'
     --exclude='*.tmp'
